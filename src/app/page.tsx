@@ -1,34 +1,28 @@
-import React from 'react';
-import { MessageCircle, Menu, Search, ShoppingCart, ChevronDown, Play, Download, Layout, MessageSquare, Bot, Check, ChevronRight, X } from 'lucide-react';
-import Footer from '@/components/footer';
-import { NavBar } from '@/components/navbar';
-import { Hero } from '@/components/hero';
-import { ProductInfo } from '@/components/product_info';
-import { About } from '@/components/about';
+import React from "react";
 
+import Footer from "@/components/footer";
+import { NavBar } from "@/components/navbar";
+import { Hero } from "@/components/hero";
+import { ProductInfo } from "@/components/product_info";
+import { About } from "@/components/about";
 
 const LandingPage = () => {
-  
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <NavBar/>
+      <NavBar />
 
       {/* Hero Section */}
-      <Hero/>
+      <Hero />
       {/* Service Section */}
-      <ProductInfo/>
+      <ProductInfo />
       {/* about us Section */}
-      <About/>
+      <About />
       {/* Pricing Section */}
-      
-      <Footer/>
+
+      <Footer />
     </div>
   );
 };
-
-
-
-
 
 export default LandingPage;
