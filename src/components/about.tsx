@@ -13,12 +13,12 @@ export const About = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="lg:w-1/2">
-              <div className="text-red-400 font-medium mb-4">About Us</div>
+              <div className="text-red-400 font-medium mb-4">Sobre nós</div>
               <h2 className="text-4xl font-bold text-indigo-900 mb-6">
-                Get To Know Our Chatbot Assistant - Talkie
+                Conheça seu mais novo parceiro de negócios - NobleBot
               </h2>
               <p className="text-gray-600 mb-8">
-                We are a pioneering company specializing in Telegram chatbot solutions with seamless payment integration. Our mission is to transform how businesses interact with their customers through intelligent automation.
+              Somos uma empresa pioneira especializada em soluções de chatbot para Telegram com integração perfeita de pagamentos. Nossa missão é transformar a maneira como as empresas interagem com seus clientes através da automação inteligente.
               </p>
 
               <div className="bg-white rounded-lg shadow-lg p-6">
@@ -30,7 +30,7 @@ export const About = () => {
                         activeTab === 'vision' ? 'text-red-400' : 'text-gray-600'
                       }`}
                     >
-                      Our Vision
+                      Nossa Visão
                     </button>
                     <button
                       onClick={() => setActiveTab('mission')}
@@ -38,22 +38,22 @@ export const About = () => {
                         activeTab === 'mission' ? 'text-red-400' : 'text-gray-600'
                       }`}
                     >
-                      Our Mission
+                      Nossa Missão
                     </button>
                   </div>
                   <div className="flex-1 pl-8">
                     <h3 className="text-xl font-bold text-indigo-900 mb-6">
-                      {activeTab === 'vision' ? 'Our Vision' : 'Our Mission'}
+                      {activeTab === 'vision' ? 'Nossa Visão' : 'Nossa Missão'}
                     </h3>
                     <div className="space-y-4">
                       <Feature
-                        text="AI-Based Chatbot Assistant with Integrated Payments"
+                        text="Automatizar processos de onboarding"
                       />
                       <Feature
-                        text="Learning And Improving Our Responses"
+                        text="Ajudar a aumentar as vendas dos nossos clientes"
                       />
                       <Feature
-                        text="Language Model Developed By Open AI"
+                        text="Ser referencia no mercado de chatBots"
                       />
                     </div>
                   </div>
@@ -65,16 +65,12 @@ export const About = () => {
               <div className="relative">
                 <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
                   <div className="bg-red-400 text-white p-4">
-                    Talkie
+                    NobleBot
                   </div>
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <img 
-                        src="/api/placeholder/40/40"
-                        alt="User Avatar"
-                        className="rounded-full"
-                      />
-                      <span className="text-gray-600">John Doe</span>
+                      
+                      <span className="text-gray-600">John Max</span>
                     </div>
                     <div className="space-y-4">
                       <ChatPreviewMessage bot user={false} />

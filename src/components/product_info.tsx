@@ -5,10 +5,10 @@ export const ProductInfo = () => (
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-indigo-900 mb-4">
-              Engage In Conversations
+              Como funciona?
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Our chatbot uses advanced natural language processing to understand and respond to your customers' needs effectively and efficiently.
+              Crie um novo Bot no Telegram, integre conosco, autorize as vendas no gateway de pagamento, personalize seu bot e pronto.
             </p>
           </div>
 
@@ -16,26 +16,26 @@ export const ProductInfo = () => (
             <ProcessStep
               number="01"
               icon={<Download className="w-8 h-8" />}
-              title="Input Processing"
-              description="The chatbot receives user's message or query and uses NLP to understand the intent."
+              title="Crie um bot no telegram"
+              description="Você pode criar um novo bot atravéz do @botFather: https://core.telegram.org/"
             />
             <ProcessStep
               number="02"
               icon={<Layout className="w-8 h-8" />}
-              title="Holistic Perception"
-              description="Advanced algorithms analyze the context and sentiment of the message for better understanding."
+              title="Crie uma conta no gateway de pagamento."
+              description="atualmente usamos mercadoPago, logo teremos mais opções."
             />
             <ProcessStep
               number="03"
               icon={<MessageSquare className="w-8 h-8" />}
-              title="Generate Response"
-              description="The system processes the input and generates relevant, contextual responses."
+              title="Crie seu NobleBot"
+              description="Crie seu novo Bot, fornecendo as informações pedidas."
             />
             <ProcessStep
               number="04"
               icon={<Bot className="w-8 h-8" />}
-              title="Output Delivery"
-              description="The final response is delivered to the user in a natural, conversational manner."
+              title="Customize as mensagens e tipo de serviço oferecido"
+              description="Ao customizar seu bot estará pronto para atender seus clientes de maneira automatica e nós cobramos apenas por transação  ;)."
             />
           </div>
 
