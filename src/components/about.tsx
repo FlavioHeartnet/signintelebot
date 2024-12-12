@@ -9,7 +9,7 @@ export type Features = {
 export const About = () => {
   const [activeTab, setActiveTab] = useState("vision");
   return (
-    <section className="py-20 bg-white">
+    <section id="about" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row items-center gap-12">
           <div className="lg:w-1/2">

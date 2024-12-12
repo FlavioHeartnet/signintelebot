@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 
 export const Hero = () => (
-  <div className="container mx-auto px-4 py-20 min-h-screen">
+  <div id="home" className="container mx-auto px-4 py-20 min-h-screen">
     <div className="flex flex-col lg:flex-row items-center gap-12">
       <div className="lg:w-1/2">
         <h1 className="text-6xl font-bold text-indigo-900 mb-6">
@@ -27,7 +27,7 @@ export const Hero = () => (
           {/* Chat Interface */}
           <div className="bg-white rounded-3xl shadow-xl p-6">
             <div className="bg-red-400 text-white p-4 rounded-t-2xl mb-6">
-              Talkie
+              NobleBot
             </div>
             <ChatMessage
               text="How Can I help you?"

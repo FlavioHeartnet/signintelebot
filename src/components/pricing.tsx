@@ -2,7 +2,7 @@ import { Check, ChevronRight, X } from "lucide-react";
 import { Features } from "./about";
 
 export const Pricing = () => (
-  <section className="py-20 bg-gray-50">
+  <section id="pricing" className="py-20 bg-gray-50">
     <div className="container mx-auto px-4">
       <div className="text-center mb-16">
         <div className="text-red-400 font-medium mb-4">Pricing</div>

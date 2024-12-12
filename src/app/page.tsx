@@ -5,13 +5,13 @@ import { NavBar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
 import { ProductInfo } from "@/components/product_info";
 import { About } from "@/components/about";
+import { Pricing } from "@/components/pricing";
 
 const LandingPage = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <NavBar />
-
+      <NavBar isAuthenticated={false} />
       {/* Hero Section */}
       <Hero />
       {/* Service Section */}
@@ -19,7 +19,7 @@ const LandingPage = () => {
       {/* about us Section */}
       <About />
       {/* Pricing Section */}
-
+      <Pricing />
       <Footer />
     </div>
   );
