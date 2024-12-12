@@ -2,7 +2,7 @@ import { NavBar } from "@/components/navbar";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 
-export const Home = async () => {
+export default async function Home() {
   const {
     isAuthenticated,
   } = getKindeServerSession();
@@ -18,5 +18,3 @@ export const Home = async () => {
     </div>
   );
 };
-
-export default Home;
