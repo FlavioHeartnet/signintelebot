@@ -13,7 +13,7 @@ interface ErrorResponse {
   message: string;
 }
 
-export default async function POST(
+export async function POST(
   req: NextApiRequest,
   res: NextApiResponse<MercadoPagoTokenResponse | ErrorResponse>,
 ) {
