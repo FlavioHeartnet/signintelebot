@@ -4,13 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(
   req: NextRequest,
 ) {
-  if (req.method !== "POST") {
-    return NextResponse.json({
-      error: "Method not allowed",
-      message: "Only POST requests are allowed",
-    }, { status: 405 });
-  }
-
+  
   try {
     const code = req.nextUrl.searchParams.get("code");
 
