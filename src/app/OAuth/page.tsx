@@ -1,15 +1,31 @@
 // components/MercadoPagoAuth.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function MercadoPagoAuth() {
+interface MercadoPagoTokenResponse {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  scope: string;
+  refresh_token: string;
+  public_key?: string;
+  live_mode?: boolean;
+  user_id?: number;
+}
+
+interface MercadoPagoErrorResponse {
+  error: string;
+  message: string;
+  status?: number;
+}
+
+function AuthContent() {
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [result, setResult] = useState<any | null>(null);
+  const [result, setResult] = useState<MercadoPagoTokenResponse | null>(null);
 
   useEffect(() => {
     const code = searchParams.get("code");
@@ -31,16 +47,22 @@ export default function MercadoPagoAuth() {
         body: JSON.stringify({ code }),
       });
 
-      const result = await response.json();
+      const data: MercadoPagoTokenResponse | MercadoPagoErrorResponse =
+        await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || "Falha na autenticação");
+        throw new Error(
+          "message" in data ? data.message : "Falha na autenticação",
+        );
       }
 
-      setResult(result);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      setError(err.message);
+      // Type assertion since we know it's a success response at this point
+      setResult(data as MercadoPagoTokenResponse);
+    } catch (error) {
+      const errorMessage = error instanceof Error
+        ? error.message
+        : "Erro desconhecido";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -148,10 +170,32 @@ export default function MercadoPagoAuth() {
             Aguardando Autorização
           </h2>
           <p className="text-gray-600 text-center">
-            Aguardando autorização do MercadoPago...
+            Aguardando código de autorização do MercadoPago...
           </p>
         </div>
       </div>
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="bg-white rounded-lg shadow p-6">
+        <div className="flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#6366F1]">
+          </div>
+          <span className="ml-2 text-gray-600">Carregando...</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function MercadoPagoAuth() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <AuthContent />
+    </Suspense>
   );
 }
