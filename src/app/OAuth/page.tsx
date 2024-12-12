@@ -55,7 +55,7 @@ function AuthContent() {
           "message" in data ? data.message : "Falha na autenticação",
         );
       }
-
+      console.log(result);
       // Type assertion since we know it's a success response at this point
       setResult(data as MercadoPagoTokenResponse);
     } catch (error) {
