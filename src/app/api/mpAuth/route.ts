@@ -1,4 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+
+import { randomUUID } from "crypto";
+import { NextRequest, NextResponse } from "next/server";
 
 interface MercadoPagoTokenResponse {
   access_token: string;
@@ -14,24 +16,24 @@ interface ErrorResponse {
 }
 
 export async function POST(
-  req: NextApiRequest,
-  res: NextApiResponse<MercadoPagoTokenResponse | ErrorResponse>,
+  req: NextRequest,
+  res: NextResponse<MercadoPagoTokenResponse | ErrorResponse>,
 ) {
   if (req.method !== "POST") {
-    return res.status(405).json({
-      error: "Method not allowed",
-      message: "Only POST requests are allowed",
-    });
+    return NextResponse.json({
+        error: "Method not allowed",
+        message: "Only POST requests are allowed",
+      }, {status: 405});
   }
 
   try {
-    const { code } = req.body;
+    const code = req.nextUrl.searchParams.get('code');
 
     if (!code) {
-      return res.status(400).json({
+      return NextResponse.json({
         error: "Missing code",
         message: "Authorization code is required",
-      });
+      }, {status: 400});
     }
 
     // Verificar se todas as variáveis de ambiente necessárias estão definidas
@@ -50,9 +52,8 @@ export async function POST(
     formData.append("grant_type", "authorization_code");
     formData.append("code", code);
     formData.append("redirect_uri", process.env.MERCADOPAGO_REDIRECT_URI);
-    if (process.env.MERCADOPAGO_STATE) {
-      formData.append("state", process.env.MERCADOPAGO_STATE);
-    }
+    formData.append("state", randomUUID());
+    
 
     // Fazer a requisição para o Mercado Pago
     const response = await fetch("https://api.mercadopago.com/oauth/token", {
@@ -70,12 +71,13 @@ export async function POST(
       throw new Error(data.message || "Failed to get access token");
     }
 
-    return res.status(200).json(data);
+    return NextResponse.json(data, {status: 200});
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    return res.status(500).json({
-      error: "Internal server error",
-      message: error.message,
-    });
+    return NextResponse.json({
+        error: "Internal server error",
+        message: error.message,
+      }, {status: 500});
+    
   }
 }
