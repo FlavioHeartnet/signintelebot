@@ -2,22 +2,9 @@
 import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 
-interface MercadoPagoTokenResponse {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
-  scope: string;
-  refresh_token: string;
-}
-
-interface ErrorResponse {
-  error: string;
-  message: string;
-}
 
 export async function POST(
-  req: NextRequest,
-  res: NextResponse<MercadoPagoTokenResponse | ErrorResponse>,
+  req: NextRequest
 ) {
   if (req.method !== "POST") {
     return NextResponse.json({
