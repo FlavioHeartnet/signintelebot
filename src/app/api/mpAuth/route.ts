@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(
   req: NextRequest,
 ) {
-  
   try {
     const code = req.nextUrl.searchParams.get("code");
 
@@ -44,7 +43,7 @@ export async function POST(
     });
 
     const data = await response.json();
-    console.log(data)
+    console.log(data);
     if (!response.ok) {
       throw new Error(data.message || "Failed to get access token");
     }

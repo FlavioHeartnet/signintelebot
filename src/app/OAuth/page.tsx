@@ -39,7 +39,7 @@ function AuthContent() {
     setError(null);
 
     try {
-      const response = await fetch("/api/mpAuth?code="+code, {
+      const response = await fetch("/api/mpAuth?code=" + code, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
