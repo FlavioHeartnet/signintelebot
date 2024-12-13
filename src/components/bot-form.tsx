@@ -4,24 +4,42 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import BotTable from "./bot-table";
 interface Bot {
-  botToken: string;
-  botGroupId: string;
-  paymentIntegration: string;
+  id: string
+  botToken: string
+  botGroupId: string
+  paymentIntegration: boolean
 }
 export default function BotConfigForm() {
   const [formData, setFormData] = useState<Bot>({
+    id: "",
     botToken: "",
     botGroupId: "",
-    paymentIntegration: "",
+    paymentIntegration: false,
   });
-  //const [saveInfo, setSaveInfo] = useState(false);
-  const [bots, setBots] = useState<Bot[]>([]);
+
+  const [bots, setBots] = useState<Bot[]>([])
+  const [editing, setEditing] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setBots([...bots, formData]);
-    setFormData({ botToken: "", botGroupId: "", paymentIntegration: "" });
-  };
+    console.log(bots)
+    e.preventDefault()
+    if (editing) {
+      setBots(bots.map(bot => bot.id === editing ? { ...formData, id: editing } : bot))
+      setEditing(null)
+    } else {
+      setBots([...bots, { ...formData, id: Date.now().toString() }])
+    }
+    setFormData({ id: '', botToken: '', botGroupId: '', paymentIntegration: false })
+  }
+
+  const handleEdit = (bot: Bot) => {
+    setFormData(bot)
+    setEditing(bot.id)
+  }
+
+  const handleDelete = (id: string) => {
+    setBots(bots.filter(bot => bot.id !== id))
+  }
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
@@ -55,11 +73,10 @@ export default function BotConfigForm() {
           <div className="space-y-1">
             <input
               type="text"
-              placeholder="Bot Group ID*"
+              placeholder="Enter Bot Group ID*"
               className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ff7171] focus:border-transparent"
               value={formData.botGroupId}
-              onChange={(e) =>
-                setFormData({ ...formData, botGroupId: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, botGroupId: e.target.value })}
               required
             />
           </div>
@@ -69,10 +86,10 @@ export default function BotConfigForm() {
           type="submit"
           className="bg-[#ff7171] hover:bg-[#ff5959] text-white px-8 py-2 rounded-md transition-colors"
         >
-          Salvar →
+          {editing ? 'Editar' : 'Salvar'} →
         </Button>
       </form>
-      <BotTable bots={bots} />
+      <BotTable bots={bots} onDelete={handleDelete} onEdit={handleEdit} />
     </div>
   );
 }
