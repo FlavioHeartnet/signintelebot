@@ -1,17 +1,10 @@
 import { NavBar } from "@/components/navbar";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import AuthLayout from "../authLayout";
 
 export default async function Home() {
-  const {
-    isAuthenticated,
-  } = getKindeServerSession();
-  if (!await isAuthenticated) {
-    redirect("/");
-  }
   return (
-    <div>
+    <AuthLayout>
       <NavBar isHomePage={true} isAuthenticated />
       <div className="container mx-auto px-4 py-20 min-h-screen">
         <Link
@@ -21,6 +14,6 @@ export default async function Home() {
           Autorizar MercadoPago
         </Link>
       </div>
-    </div>
+    </AuthLayout>
   );
 }
