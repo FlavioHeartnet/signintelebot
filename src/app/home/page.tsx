@@ -1,5 +1,4 @@
 import { NavBar } from "@/components/navbar";
-import Link from "next/link";
 import AuthLayout from "../authLayout";
 
 export default async function Home() {

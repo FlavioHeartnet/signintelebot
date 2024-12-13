@@ -6,8 +6,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button"
-import { Pencil, Trash2 } from 'lucide-react'
+import { Button } from "@/components/ui/button";
+import { Pencil, Trash2 } from "lucide-react";
 import MercadoPagoAuthButton from "./mp-auth-button";
 
 interface Bot {
@@ -19,16 +19,16 @@ interface Bot {
 
 interface BotTableProps {
   bots: Bot[];
-  onEdit: (bot: Bot) => void
-  onDelete: (id: string) => void
+  onEdit: (bot: Bot) => void;
+  onDelete: (id: string) => void;
 }
-
-
 
 export default function BotTable({ bots, onEdit, onDelete }: BotTableProps) {
   return (
     <div className="mt-12 overflow-x-auto">
-      <h2 className="text-2xl font-medium text-[#2d2d5f] mb-4">Configured Bots</h2>
+      <h2 className="text-2xl font-medium text-[#2d2d5f] mb-4">
+        Configured Bots
+      </h2>
       <Table>
         <TableHeader>
           <TableRow>
@@ -45,7 +45,11 @@ export default function BotTable({ bots, onEdit, onDelete }: BotTableProps) {
                 {bot.botToken.slice(0, 4)}...{bot.botToken.slice(-4)}
               </TableCell>
               <TableCell>{bot.botGroupId}</TableCell>
-              <TableCell>{!bot.paymentIntegration ? <MercadoPagoAuthButton/> : <span className="text-green-500">Autorizado</span>}</TableCell>
+              <TableCell>
+                {!bot.paymentIntegration
+                  ? <MercadoPagoAuthButton />
+                  : <span className="text-green-500">Autorizado</span>}
+              </TableCell>
               <TableCell>
                 <div className="flex space-x-2">
                   <Button
@@ -73,7 +77,9 @@ export default function BotTable({ bots, onEdit, onDelete }: BotTableProps) {
         </TableBody>
       </Table>
       {bots.length === 0 && (
-        <p className="text-gray-500 text-center py-4">No bots configured yet.</p>
+        <p className="text-gray-500 text-center py-4">
+          No bots configured yet.
+        </p>
       )}
     </div>
   );
