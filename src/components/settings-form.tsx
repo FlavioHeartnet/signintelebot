@@ -27,7 +27,7 @@ export default function SettingsForm() {
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="name">Nome</Label>
-            <User className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            
             <Input
               id="name"
               placeholder="Entre com seu nome completo"
@@ -36,7 +36,7 @@ export default function SettingsForm() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Mail className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            
             <Input
               id="email"
               type="email"
@@ -46,7 +46,7 @@ export default function SettingsForm() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="phone">Celular</Label>
-            <Phone className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            
             <Input
               id="phone"
               type="tel"

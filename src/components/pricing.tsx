@@ -19,6 +19,8 @@ export const Pricing = () => (
           features={[
             { text: "até 2 chatbot", included: true },
             { text: "5% + R$1 por transação", included: true },
+            { text: "Suporte horário comercial, whatsapp e discord.", included: false },
+            { text: "Fluxos customizados, com valores negociados à parte.", included: false }
           ]}
           highlighted={false}
         />
@@ -29,20 +31,22 @@ export const Pricing = () => (
           isYear
           features={[
             { text: "até 5 chatbot", included: true },
-            { text: "3% + R$1 por transação", included: true },
+            { text: "4% + R$1 por transação", included: true },
+            { text: "Suporte horário comercial, whatsapp e discord.", included: true },
+            { text: "Fluxos customizados, com valores negociados à parte.", included: false }
           ]}
           highlighted={true}
         />
 
         <PricingCard
           title="Enterprise"
-          price="80"
-          isYear={false}
+          price="R$499,99"
+          isYear
           features={[
-            { text: "150 chatbot", included: true },
-            { text: "5000 Monthly message", included: true },
-            { text: "1000 subscribers", included: true },
-            { text: "Provide Watermark", included: true },
+            { text: "chatbots ilimitados.", included: true },
+            { text: "3% + R$1 por transação.", included: true },
+            { text: "Suporte exclusívo, whatsapp e discord.", included: true },
+            { text: "Fluxos customizados, com valores negociados à parte.", included: true }
           ]}
           highlighted={false}
         />
