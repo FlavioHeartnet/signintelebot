@@ -39,12 +39,11 @@ function AuthContent() {
     setError(null);
 
     try {
-      const response = await fetch("/api/mercadopago-auth", {
+      const response = await fetch("/api/mpAuth?code="+code, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ code }),
       });
 
       const data: MercadoPagoTokenResponse | MercadoPagoErrorResponse =
