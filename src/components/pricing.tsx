@@ -13,6 +13,7 @@ export const Pricing = () => (
 
       <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
         <PricingCard
+          isActivePlan
           title="Starter"
           isYear={false}
           price="Grátis"
@@ -26,6 +27,7 @@ export const Pricing = () => (
         />
 
         <PricingCard
+          isActivePlan={false}
           title="Professional"
           price="R$150"
           isYear
@@ -39,6 +41,7 @@ export const Pricing = () => (
         />
 
         <PricingCard
+          isActivePlan={false}
           title="Enterprise"
           price="R$499,99"
           isYear
@@ -56,18 +59,19 @@ export const Pricing = () => (
 );
 
 const PricingCard = (
-  { title, price, features, highlighted = false, isYear = false }: {
+  { title, price, features, highlighted = false, isYear = false, isActivePlan = false }: {
     title: string;
     price: string;
     features: Features[];
     highlighted: boolean;
     isYear: boolean;
+    isActivePlan: boolean;
   },
 ) => (
   <div
     className={`rounded-2xl p-8 ${
       highlighted ? "bg-indigo-700 text-white" : "bg-white"
-    }`}
+    } ${!isActivePlan ? "opacity-25": ""}`}
   >
     <h3 className="text-2xl font-bold mb-8">{title}</h3>
 
@@ -105,14 +109,14 @@ const PricingCard = (
       ))}
     </div>
 
-    <button
+    <button disabled={!isActivePlan}
       className={`w-full py-3 rounded-lg flex items-center justify-center gap-2 font-medium ${
         highlighted
           ? "bg-white text-indigo-700 hover:bg-gray-100"
           : "bg-indigo-700 text-white hover:bg-indigo-800"
       }`}
     >
-      COMEÇAR AGORA
+      {isActivePlan ? "COMEÇAR AGORA" : "EM BREVE"}
       <ChevronRight className="w-4 h-4" />
     </button>
   </div>
