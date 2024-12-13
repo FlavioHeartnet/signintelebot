@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Lock, Mail, Phone, User } from "lucide-react";
+import { Lock} from "lucide-react";
 
 export default function SettingsForm() {
   return (
@@ -27,7 +27,7 @@ export default function SettingsForm() {
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="name">Nome</Label>
-            
+
             <Input
               id="name"
               placeholder="Entre com seu nome completo"
@@ -36,7 +36,7 @@ export default function SettingsForm() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            
+
             <Input
               id="email"
               type="email"
@@ -46,7 +46,7 @@ export default function SettingsForm() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="phone">Celular</Label>
-            
+
             <Input
               id="phone"
               type="tel"

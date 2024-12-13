@@ -20,8 +20,14 @@ export const Pricing = () => (
           features={[
             { text: "até 2 chatbot", included: true },
             { text: "5% + R$1 por transação", included: true },
-            { text: "Suporte horário comercial, whatsapp e discord.", included: false },
-            { text: "Fluxos customizados, com valores negociados à parte.", included: false }
+            {
+              text: "Suporte horário comercial, whatsapp e discord.",
+              included: false,
+            },
+            {
+              text: "Fluxos customizados, com valores negociados à parte.",
+              included: false,
+            },
           ]}
           highlighted={false}
         />
@@ -34,8 +40,14 @@ export const Pricing = () => (
           features={[
             { text: "até 5 chatbot", included: true },
             { text: "4% + R$1 por transação", included: true },
-            { text: "Suporte horário comercial, whatsapp e discord.", included: true },
-            { text: "Fluxos customizados, com valores negociados à parte.", included: false }
+            {
+              text: "Suporte horário comercial, whatsapp e discord.",
+              included: true,
+            },
+            {
+              text: "Fluxos customizados, com valores negociados à parte.",
+              included: false,
+            },
           ]}
           highlighted={true}
         />
@@ -49,7 +61,10 @@ export const Pricing = () => (
             { text: "chatbots ilimitados.", included: true },
             { text: "3% + R$1 por transação.", included: true },
             { text: "Suporte exclusívo, whatsapp e discord.", included: true },
-            { text: "Fluxos customizados, com valores negociados à parte.", included: true }
+            {
+              text: "Fluxos customizados, com valores negociados à parte.",
+              included: true,
+            },
           ]}
           highlighted={false}
         />
@@ -59,7 +74,14 @@ export const Pricing = () => (
 );
 
 const PricingCard = (
-  { title, price, features, highlighted = false, isYear = false, isActivePlan = false }: {
+  {
+    title,
+    price,
+    features,
+    highlighted = false,
+    isYear = false,
+    isActivePlan = false,
+  }: {
     title: string;
     price: string;
     features: Features[];
@@ -71,7 +93,7 @@ const PricingCard = (
   <div
     className={`rounded-2xl p-8 ${
       highlighted ? "bg-indigo-700 text-white" : "bg-white"
-    } ${!isActivePlan ? "opacity-25": ""}`}
+    } ${!isActivePlan ? "opacity-25" : ""}`}
   >
     <h3 className="text-2xl font-bold mb-8">{title}</h3>
 
@@ -80,7 +102,7 @@ const PricingCard = (
       <span
         className={`text-sm ${highlighted ? "text-red-300" : "text-red-400"}`}
       >
-        {isYear ? "/ano": ""}
+        {isYear ? "/ano" : ""}
       </span>
     </div>
 
@@ -109,7 +131,8 @@ const PricingCard = (
       ))}
     </div>
 
-    <button disabled={!isActivePlan}
+    <button
+      disabled={!isActivePlan}
       className={`w-full py-3 rounded-lg flex items-center justify-center gap-2 font-medium ${
         highlighted
           ? "bg-white text-indigo-700 hover:bg-gray-100"
