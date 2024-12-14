@@ -134,7 +134,7 @@ function AuthContent() {
           </div>
           <div className="bg-white rounded p-4 overflow-auto">
             <pre className="text-sm text-gray-600">
-              {/* {JSON.stringify(result, null, 2)} */}
+               {JSON.stringify(result, null, 2)}
             </pre>
           </div>
           <button
