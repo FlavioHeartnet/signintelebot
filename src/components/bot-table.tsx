@@ -47,7 +47,7 @@ export default function BotTable({ bots, onEdit, onDelete }: BotTableProps) {
               <TableCell>{bot.botGroupId}</TableCell>
               <TableCell>
                 {!bot.paymentIntegration
-                  ? <MercadoPagoAuthButton botid={bot.botToken} />
+                  ? <MercadoPagoAuthButton />
                   : <span className="text-green-500">Autorizado</span>}
               </TableCell>
               <TableCell>
