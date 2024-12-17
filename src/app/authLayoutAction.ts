@@ -19,7 +19,6 @@ export default async function insertUserSupabase(
   phone: string = "",
 ) {
   try {
-    console.log("verificacão");
     if (!await checkIfKindeUserIsInSupabase(id_kinde)) {
       const resp = await supabaseAdmin().from("users").insert({
         created_at: new Date(),
