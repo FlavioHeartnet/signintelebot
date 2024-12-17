@@ -1,5 +1,6 @@
 "use client";
 
+import editUser from "@/app/settings/editAction";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,14 +9,43 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import toast, { Toaster } from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Lock } from "lucide-react";
+import { useState } from "react";
+export type SettingData = {
+  id: string;
+  name: string;
+  surname: string;
+  email: string;
+  phone: string;
+};
+export default function SettingsForm({ userInfo }: { userInfo: SettingData }) {
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [phone, setPhone] = useState("");
 
-export default function SettingsForm() {
+  const handleSubmit = async () => {
+    const resp = await editUser({
+      id: userInfo.id,
+      name: name,
+      surname: surname,
+      phone: phone,
+      email: userInfo.email,
+    });
+
+    if (resp) {
+      toast.success("Successfully toasted!");
+    } else {
+      toast.error("This didn't work.");
+    }
+  };
+
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader className="space-y-1">
+        <Toaster />
         <CardTitle className="text-3xl font-medium text-[#45456B]">
           Configuração de conta
         </CardTitle>
@@ -24,13 +54,25 @@ export default function SettingsForm() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2" suppressHydrationWarning>
           <div className="space-y-2">
             <Label htmlFor="name">Nome</Label>
-
             <Input
               id="name"
-              placeholder="Entre com seu nome completo"
+              onChange={(e) => setName(e.target.value)}
+              placeholder={userInfo.name ? userInfo.name : "Entre com seu nome"}
+              className="pl-10 border-gray-200 focus:border-[#FF7171]"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="name">Sobrenome</Label>
+
+            <Input
+              id="surname"
+              onChange={(e) => setSurname(e.target.value)}
+              placeholder={userInfo.surname
+                ? userInfo.surname
+                : "Entre com seu sobrenome"}
               className="pl-10 border-gray-200 focus:border-[#FF7171]"
             />
           </div>
@@ -39,6 +81,8 @@ export default function SettingsForm() {
 
             <Input
               id="email"
+              disabled
+              value={userInfo.email}
               type="email"
               placeholder="Entre com seu endereço de email"
               className="pl-10 border-gray-200 focus:border-[#FF7171]"
@@ -49,8 +93,10 @@ export default function SettingsForm() {
 
             <Input
               id="phone"
-              type="tel"
-              placeholder="Entre com seu númeto de celular"
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder={userInfo.phone
+                ? userInfo.phone
+                : "Entre com seu númeto de celular"}
               className="pl-10 border-gray-200 focus:border-[#FF7171]"
             />
           </div>
@@ -70,7 +116,10 @@ export default function SettingsForm() {
             </Button>
           </div>
         </div>
-        <Button className="w-full sm:w-auto bg-[#FF7171] hover:bg-[#FF7171]/90 text-white">
+        <Button
+          onClick={handleSubmit}
+          className="w-full sm:w-auto bg-[#FF7171] hover:bg-[#FF7171]/90 text-white"
+        >
           Salvar
         </Button>
       </CardContent>
