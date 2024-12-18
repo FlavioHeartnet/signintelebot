@@ -74,7 +74,7 @@ export async function updateBot(
 
 export async function updatePaymentToken(id: string, payment_token: string) {
   try {
-    await supabaseAdmin().from("bots").upsert({
+    await supabaseAdmin().from("bots").update({
       payment_token: payment_token,
     }).eq("id", id);
   } catch (e) {

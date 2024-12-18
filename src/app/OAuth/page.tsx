@@ -29,22 +29,26 @@ function AuthContent() {
 
   useEffect(() => {
     const code = searchParams.get("code");
+    const state = searchParams.get("state");
     if (code) {
-      handleAuth(code);
+      handleAuth(code, state);
     }
   }, [searchParams]);
 
-  const handleAuth = async (code: string) => {
+  const handleAuth = async (code: string, state: string | null) => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("/api/mpAuth?code=" + code, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "/api/mpAuth?code=" + code + "&state=" + state,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       const data: MercadoPagoTokenResponse | MercadoPagoErrorResponse =
         await response.json();

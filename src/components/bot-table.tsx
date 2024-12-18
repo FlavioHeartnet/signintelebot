@@ -27,7 +27,7 @@ export default function BotTable({ bots, onEdit, onDelete }: BotTableProps) {
   return (
     <div className="mt-12 overflow-x-auto">
       <h2 className="text-2xl font-medium text-[#2d2d5f] mb-4">
-        Configured Bots
+        Bots configurados
       </h2>
       <Table>
         <TableHeader>
@@ -47,7 +47,7 @@ export default function BotTable({ bots, onEdit, onDelete }: BotTableProps) {
               <TableCell>{bot.botGroupId}</TableCell>
               <TableCell>
                 {!bot.paymentIntegration
-                  ? <MercadoPagoAuthButton />
+                  ? <MercadoPagoAuthButton idbot={bot.id} />
                   : <span className="text-green-500">Autorizado</span>}
               </TableCell>
               <TableCell>

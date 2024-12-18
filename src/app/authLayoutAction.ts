@@ -1,3 +1,5 @@
+"use server";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { supabaseAdmin } from "./api/supabase";
 
 export async function checkIfKindeUserIsInSupabase(id_kinde: string) {
@@ -53,4 +55,13 @@ export async function getUserIdByKindeId(kinde_id: string) {
   } catch (e) {
     throw new Error("Error Supabase: " + e);
   }
+}
+
+export async function validateAuth() {
+  const { getUser } = await getKindeServerSession();
+  const user = await getUser();
+  if (user) {
+    return await getUserIdByKindeId(user.id);
+  }
+  return 0;
 }

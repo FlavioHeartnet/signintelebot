@@ -1,11 +1,13 @@
 import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { supabaseAdmin } from "../supabase";
 
 export async function POST(
   req: NextRequest,
 ) {
   try {
     const code = req.nextUrl.searchParams.get("code");
+    const botid = req.nextUrl.searchParams.get("state");
 
     if (!code) {
       return NextResponse.json({
@@ -48,7 +50,17 @@ export async function POST(
       throw new Error(data.message || "Failed to get access token");
     }
 
-    return NextResponse.json(data, { status: 200 });
+    const { error, status } = await supabaseAdmin().from("bots").update({
+      payment_token: data.access_token,
+    }).eq("id", botid);
+    if (error) {
+      return NextResponse.json({
+        error: "Internal server error",
+        message: error.message,
+      }, { status: 500 });
+    }
+
+    return NextResponse.json(data, { status: status });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     return NextResponse.json({
