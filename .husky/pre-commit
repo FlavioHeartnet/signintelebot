@@ -1,2 +1,3 @@
 deno fmt
 npm run lint
+npm run build

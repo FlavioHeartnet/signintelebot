@@ -49,7 +49,7 @@ export async function getUserIdByKindeId(kinde_id: string) {
       console.log(error.message);
     }
 
-    return data ? data[0].id : 0;
+    return data ? data[0].id as number : 0;
   } catch (e) {
     throw new Error("Error Supabase: " + e);
   }
