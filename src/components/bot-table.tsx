@@ -11,7 +11,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import MercadoPagoAuthButton from "./mp-auth-button";
 
 interface Bot {
-  id: string;
+  id: number;
   botToken: string;
   botGroupId: string;
   paymentIntegration: boolean;
@@ -20,7 +20,7 @@ interface Bot {
 interface BotTableProps {
   bots: Bot[];
   onEdit: (bot: Bot) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: number) => void;
 }
 
 export default function BotTable({ bots, onEdit, onDelete }: BotTableProps) {

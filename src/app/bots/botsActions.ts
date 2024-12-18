@@ -1,6 +1,36 @@
 "use server";
 
 import { supabaseAdmin } from "../api/supabase";
+export type SupabaseBots = {
+  id: number;
+  bot_token: string;
+  bot_id_group: string;
+  status: string;
+  payment_token: string;
+};
+export async function getBots(userid: number) {
+  try {
+    const { data, error } = await supabaseAdmin().from("bots")
+      .select("id, bot_token, bot_id_group, status, payment_token")
+      .eq("bot_owner", userid);
+    if (error) {
+      console.log(error);
+    }
+
+    return data ? data as SupabaseBots[] : [];
+  } catch (e) {
+    throw new Error("Error while inserting bot supabase: " + e);
+  }
+}
+
+export async function deleteBot(idBot: number) {
+  const { status, error } = await supabaseAdmin().from("bots")
+    .delete().eq("id", idBot);
+  if (error) {
+    console.log(error);
+  }
+  return status == 204 ? true : false;
+}
 
 export default async function insertbot(
   bot_token: string,
@@ -23,13 +53,13 @@ export default async function insertbot(
 }
 
 export async function updateBot(
-  id: string,
+  id: number,
   bot_token: string,
   bot_group_id: string,
   idUser: number,
 ) {
   try {
-    const { error } = await supabaseAdmin().from("bots").upsert({
+    const { error } = await supabaseAdmin().from("bots").update({
       created_at: new Date(),
       bot_token: bot_token,
       bot_owner: idUser,

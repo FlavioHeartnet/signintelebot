@@ -1,26 +1,47 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BotTable from "./bot-table";
-import insertbot, { updateBot } from "@/app/bots/botsActions";
+import insertbot, {
+  deleteBot,
+  getBots,
+  updateBot,
+} from "@/app/bots/botsActions";
+import toast, { Toaster } from "react-hot-toast";
 interface Bot {
-  id: string;
+  id: number;
   botToken: string;
   botGroupId: string;
   paymentIntegration: boolean;
 }
 export default function BotConfigForm({ userId }: { userId: number }) {
   const [formData, setFormData] = useState<Bot>({
-    id: "",
+    id: 0,
     botToken: "",
     botGroupId: "",
     paymentIntegration: false,
   });
 
   const [bots, setBots] = useState<Bot[]>([]);
-  const [editing, setEditing] = useState<string | null>(null);
+  const [editing, setEditing] = useState<number | null>(null);
 
+  useEffect(() => {
+    const spbots = getBots(userId);
+    spbots.then((allbots) => {
+      const allbotsmapped = allbots.map((bot) => {
+        return {
+          id: bot.id,
+          botToken: bot.bot_token,
+          botGroupId: bot.bot_id_group,
+          paymentIntegration: bot.payment_token ? true : false,
+        } as Bot;
+      });
+      setBots(
+        [...allbotsmapped],
+      );
+    });
+  }, [userId]);
   const handleSubmit = async (e: React.FormEvent) => {
     console.log(bots);
     e.preventDefault();
@@ -42,7 +63,7 @@ export default function BotConfigForm({ userId }: { userId: number }) {
       setBots([...bots, { ...formData, id: insertId }]);
     }
     setFormData({
-      id: "",
+      id: 0,
       botToken: "",
       botGroupId: "",
       paymentIntegration: false,
@@ -54,12 +75,18 @@ export default function BotConfigForm({ userId }: { userId: number }) {
     setEditing(bot.id);
   };
 
-  const handleDelete = (id: string) => {
-    setBots(bots.filter((bot) => bot.id !== id));
+  const handleDelete = async (id: number) => {
+    const resp = await deleteBot(id);
+    if (resp) {
+      setBots(bots.filter((bot) => bot.id !== id));
+    } else {
+      toast.error("Falha ao deletar, tente novamente mais tarde!");
+    }
   };
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
+      <Toaster />
       <div className="space-y-2 mb-8">
         <p className="text-[#ff7171] text-sm font-medium tracking-wide uppercase">
           — Configure seu Bot —
