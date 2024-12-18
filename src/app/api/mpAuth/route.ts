@@ -50,7 +50,7 @@ export async function POST(
       throw new Error(data.message || "Failed to get access token");
     }
 
-    const { error, status } = await supabaseAdmin().from("bots").update({
+    const { error } = await supabaseAdmin().from("bots").update({
       payment_token: data.access_token,
     }).eq("id", botid);
     if (error) {
@@ -60,7 +60,7 @@ export async function POST(
       }, { status: 500 });
     }
 
-    return NextResponse.json(data, { status: status });
+    return NextResponse.json(data, { status: 200 });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     return NextResponse.json({
