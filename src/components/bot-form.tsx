@@ -3,13 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import BotTable from "./bot-table";
+import insertbot, { updateBot } from "@/app/bots/botsActions";
 interface Bot {
   id: string;
   botToken: string;
   botGroupId: string;
   paymentIntegration: boolean;
 }
-export default function BotConfigForm() {
+export default function BotConfigForm({userId}:{ userId:number }) {
   const [formData, setFormData] = useState<Bot>({
     id: "",
     botToken: "",
@@ -23,7 +24,9 @@ export default function BotConfigForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     console.log(bots);
     e.preventDefault();
+
     if (editing) {
+      await updateBot(editing, formData.botToken, formData.botGroupId, userId);
       setBots(
         bots.map((bot) =>
           bot.id === editing ? { ...formData, id: editing } : bot
@@ -31,7 +34,8 @@ export default function BotConfigForm() {
       );
       setEditing(null);
     } else {
-      setBots([...bots, { ...formData, id: Date.now().toString() }]);
+      const insertId = await insertbot(formData.botToken, formData.botGroupId, userId);
+      setBots([...bots, { ...formData, id: insertId }]);
     }
     setFormData({
       id: "",

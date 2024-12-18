@@ -37,13 +37,17 @@ export default async function insertUserSupabase(
   }
 }
 
-export async function getUserByKindeId(kinde_id: string) {
+export async function getUserIdByKindeId(kinde_id: string) {
   try {
-    const resp = await supabaseAdmin().from("users").select("kinde_id, id").eq(
+    const {data, error} = await supabaseAdmin().from("users").select("kinde_id, id").eq(
       "kinde_id",
       kinde_id,
     );
-    return resp.data;
+    if(error){
+      console.log(error.message)
+    }
+     
+    return data ? data[0].id : 0;
   } catch (e) {
     throw new Error("Error Supabase: " + e);
   }
