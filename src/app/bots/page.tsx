@@ -7,11 +7,11 @@ import { getUserIdByKindeId } from "../authLayoutAction";
 export default async function BotsPage() {
   let idUser = 0;
   const { getUser, isAuthenticated } = await getKindeServerSession();
-  if(await isAuthenticated()){
+  if (await isAuthenticated()) {
     const kinde_user = await getUser();
     idUser = await getUserIdByKindeId(kinde_user.id);
   }
-  
+
   return (
     <AuthLayout>
       <NavBar isBotPage={true} isAuthenticated />

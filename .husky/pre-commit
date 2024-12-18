@@ -1,4 +1,5 @@
 deno fmt
+git add .
 npm run lint
 npm run build
 git push origin master
