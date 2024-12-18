@@ -22,9 +22,9 @@ export type SettingData = {
   phone: string;
 }
 export default function SettingsForm({userInfo}: {userInfo: SettingData}) {
-  const [ name, setName ] = useState("");
-  const [ surname, setSurname ] = useState("");
-  const [ phone, setPhone ] = useState("");
+  const [ name, setName ] = useState(userInfo.name);
+  const [ surname, setSurname ] = useState(userInfo.surname);
+  const [ phone, setPhone ] = useState(userInfo.phone);
 
   const handleSubmit = async () => {
     
@@ -37,9 +37,9 @@ export default function SettingsForm({userInfo}: {userInfo: SettingData}) {
     });
 
     if(resp){
-      toast.success('Successfully toasted!')
+      toast.success('Salvo com sucesso!')
     }else {
-      toast.error("This didn't work.")
+      toast.error("Algo deu errado, tente novamente mais tarde.")
     }
 
   }
