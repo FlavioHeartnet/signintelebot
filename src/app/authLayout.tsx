@@ -17,7 +17,8 @@ export default async function AuthLayout({
   const { email, id, given_name, family_name, phone_number } = await getUser();
   await insertUserSupabase(
     id,
-    given_name + " " + family_name,
+    given_name || "",
+    family_name || "",
     email || "",
     phone_number || "",
   );

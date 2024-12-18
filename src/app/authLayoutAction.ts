@@ -15,6 +15,7 @@ export async function checkIfKindeUserIsInSupabase(id_kinde: string) {
 export default async function insertUserSupabase(
   id_kinde: string,
   name: string,
+  surname: string,
   email: string,
   phone: string = "",
 ) {
@@ -23,6 +24,7 @@ export default async function insertUserSupabase(
       const resp = await supabaseAdmin().from("users").insert({
         created_at: new Date(),
         name: name,
+        surname: surname,
         email: email,
         phone: phone,
         kinde_id: id_kinde,
