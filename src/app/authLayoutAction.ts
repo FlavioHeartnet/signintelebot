@@ -39,14 +39,16 @@ export default async function insertUserSupabase(
 
 export async function getUserIdByKindeId(kinde_id: string) {
   try {
-    const {data, error} = await supabaseAdmin().from("users").select("kinde_id, id").eq(
+    const { data, error } = await supabaseAdmin().from("users").select(
+      "kinde_id, id",
+    ).eq(
       "kinde_id",
       kinde_id,
     );
-    if(error){
-      console.log(error.message)
+    if (error) {
+      console.log(error.message);
     }
-     
+
     return data ? data[0].id : 0;
   } catch (e) {
     throw new Error("Error Supabase: " + e);

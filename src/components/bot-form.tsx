@@ -10,7 +10,7 @@ interface Bot {
   botGroupId: string;
   paymentIntegration: boolean;
 }
-export default function BotConfigForm({userId}:{ userId:number }) {
+export default function BotConfigForm({ userId }: { userId: number }) {
   const [formData, setFormData] = useState<Bot>({
     id: "",
     botToken: "",
@@ -34,7 +34,11 @@ export default function BotConfigForm({userId}:{ userId:number }) {
       );
       setEditing(null);
     } else {
-      const insertId = await insertbot(formData.botToken, formData.botGroupId, userId);
+      const insertId = await insertbot(
+        formData.botToken,
+        formData.botGroupId,
+        userId,
+      );
       setBots([...bots, { ...formData, id: insertId }]);
     }
     setFormData({
