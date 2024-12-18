@@ -58,13 +58,13 @@ function AuthContent() {
           "message" in data ? data.message : "Falha na autenticação",
         );
       }
-      console.log(result);
       // Type assertion since we know it's a success response at this point
       setResult(data as MercadoPagoTokenResponse);
     } catch (error) {
       const errorMessage = error instanceof Error
         ? error.message
         : "Erro desconhecido";
+      console.log(error);
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -103,13 +103,15 @@ function AuthContent() {
                 clipRule="evenodd"
               />
             </svg>
-            <span className="ml-2 text-red-700">Erro: {error}</span>
+            <span className="ml-2 text-red-700">
+              Falha ao vincular, talvez sua conta ja tenha sido vinculada.
+            </span>
           </div>
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => window.location.href = "/bots"}
             className="mt-4 bg-[#FF7171] text-white px-4 py-2 rounded hover:bg-opacity-90 transition-colors"
           >
-            Tentar Novamente
+            Voltar
           </button>
         </div>
       </div>
@@ -138,11 +140,11 @@ function AuthContent() {
           </div>
           <div className="bg-white rounded p-4 overflow-auto">
             <pre className="text-sm text-gray-600">
-               {JSON.stringify(result, null, 2)}
+               Você pode voltar a tela de gestáo dos bots
             </pre>
           </div>
           <button
-            onClick={() => window.location.href = "/home"}
+            onClick={() => window.location.href = "/bots"}
             className="mt-4 bg-[#FF7171] text-white px-4 py-2 rounded hover:bg-opacity-90 transition-colors"
           >
             Voltar para Home
