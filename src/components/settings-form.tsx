@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Lock } from "lucide-react";
@@ -20,34 +20,32 @@ export type SettingData = {
   surname: string;
   email: string;
   phone: string;
-}
-export default function SettingsForm({userInfo}: {userInfo: SettingData}) {
-  const [ name, setName ] = useState(userInfo.name);
-  const [ surname, setSurname ] = useState(userInfo.surname);
-  const [ phone, setPhone ] = useState(userInfo.phone);
+};
+export default function SettingsForm({ userInfo }: { userInfo: SettingData }) {
+  const [name, setName] = useState(userInfo.name);
+  const [surname, setSurname] = useState(userInfo.surname);
+  const [phone, setPhone] = useState(userInfo.phone);
 
   const handleSubmit = async () => {
-    
     const resp = await editUser({
       id: userInfo.id,
       name: name,
       surname: surname,
       phone: phone,
-      email: userInfo.email
+      email: userInfo.email,
     });
 
-    if(resp){
-      toast.success('Salvo com sucesso!')
-    }else {
-      toast.error("Algo deu errado, tente novamente mais tarde.")
+    if (resp) {
+      toast.success("Salvo com sucesso!");
+    } else {
+      toast.error("Algo deu errado, tente novamente mais tarde.");
     }
+  };
 
-  }
-  
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader className="space-y-1">
-        <Toaster/>
+        <Toaster />
         <CardTitle className="text-3xl font-medium text-[#45456B]">
           Configuração de conta
         </CardTitle>
@@ -56,23 +54,25 @@ export default function SettingsForm({userInfo}: {userInfo: SettingData}) {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="grid gap-6 md:grid-cols-2" >
+        <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="name">Nome</Label>
             <Input
               id="name"
-              onChange={ (e) => setName(e.target.value)}
-              placeholder={userInfo.name ? userInfo.name: "Entre com seu nome" }
+              onChange={(e) => setName(e.target.value)}
+              placeholder={userInfo.name ? userInfo.name : "Entre com seu nome"}
               className="pl-10 border-gray-200 focus:border-[#FF7171]"
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="name">Sobrenome</Label>
-            
+
             <Input
               id="surname"
-              onChange={ (e) => setSurname(e.target.value)}
-              placeholder={userInfo.surname ? userInfo.surname : "Entre com seu sobrenome"}
+              onChange={(e) => setSurname(e.target.value)}
+              placeholder={userInfo.surname
+                ? userInfo.surname
+                : "Entre com seu sobrenome"}
               className="pl-10 border-gray-200 focus:border-[#FF7171]"
             />
           </div>
@@ -93,8 +93,10 @@ export default function SettingsForm({userInfo}: {userInfo: SettingData}) {
 
             <Input
               id="phone"
-              onChange={ (e) => setPhone(e.target.value)}
-              placeholder={userInfo.phone ? userInfo.phone : "Entre com seu númeto de celular" }
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder={userInfo.phone
+                ? userInfo.phone
+                : "Entre com seu númeto de celular"}
               className="pl-10 border-gray-200 focus:border-[#FF7171]"
             />
           </div>
@@ -114,7 +116,10 @@ export default function SettingsForm({userInfo}: {userInfo: SettingData}) {
             </Button>
           </div>
         </div>
-        <Button onClick={handleSubmit} className="w-full sm:w-auto bg-[#FF7171] hover:bg-[#FF7171]/90 text-white">
+        <Button
+          onClick={handleSubmit}
+          className="w-full sm:w-auto bg-[#FF7171] hover:bg-[#FF7171]/90 text-white"
+        >
           Salvar
         </Button>
       </CardContent>

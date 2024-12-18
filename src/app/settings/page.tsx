@@ -5,18 +5,18 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { getCurrentUserInfo } from "./editAction";
 
 export default async function Settings() {
-  let settingsData: SettingData ={
+  let settingsData: SettingData = {
     id: "",
     name: "",
     surname: "",
     email: "",
-    phone: ""
+    phone: "",
   };
   const {
     getUser,
-    isAuthenticated
+    isAuthenticated,
   } = getKindeServerSession();
-  if(await isAuthenticated()){
+  if (await isAuthenticated()) {
     const userId = (await getUser()).id;
     const user = await getCurrentUserInfo(userId);
 
@@ -28,8 +28,6 @@ export default async function Settings() {
       surname: user.surname ?? "",
     };
   }
-  
-  
 
   return (
     <AuthLayout>
