@@ -51,6 +51,7 @@ export async function POST(
 
     const { error } = await supabaseAdmin().from("bots").update({
       payment_token: data.access_token,
+      status: "active",
     }).eq("id", botid);
     if (error) {
       return NextResponse.json({
