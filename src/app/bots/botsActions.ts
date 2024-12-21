@@ -42,7 +42,7 @@ export default async function insertbot(
       created_at: new Date(),
       bot_token: bot_token,
       bot_owner: idUser,
-      status: "active",
+      status: "waiting payment integration",
       bot_id_group: bot_group_id,
     }).select("id").limit(1);
     console.log(error);
