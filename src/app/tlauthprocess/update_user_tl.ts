@@ -10,7 +10,7 @@ export async function UpdateSupabaseTelegramId(
   const { error } = await supabaseAdmin().from("users").update({
     telegram_id: userId,
     telegram_session: sessionId,
-  }).eq("id", kindeId);
+  }).eq("kinde_id", kindeId);
   if (error) {
     dbErrorsCheck(error);
     return false;

@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+//import { useRouter } from "next/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { UpdateSupabaseTelegramId } from "@/app/tlauthprocess/update_user_tl";
 interface TelegramLoginProps {
@@ -25,6 +26,7 @@ export default function TelegramValidationPage(
   const [step, setStep] = useState<"phone" | "code" | "password">("phone");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  //const router = useRouter();
 
   const handleSendCode = async () => {
     setLoading(true);
@@ -71,7 +73,7 @@ export default function TelegramValidationPage(
         setStep("password");
       } else {
         const isUpdatedInDb = await UpdateSupabaseTelegramId(
-          data.sessionid,
+          data.session,
           data.result.user.id,
           kinde_id,
         );

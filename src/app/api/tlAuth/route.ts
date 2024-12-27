@@ -78,7 +78,7 @@ async function handleVerifyCode(sessionId: string, phoneCode: number) {
       client.session.save();
       loginAttempts.delete(sessionId);
 
-      return NextResponse.json({ sessionId, result: signJsonResult }, {
+      return NextResponse.json({ session: sessionId, result: signJsonResult }, {
         status: 200,
       });
     } catch (error) {

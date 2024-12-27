@@ -1,4 +1,4 @@
-import elastic from "elastic-apm-node";
+/*import elastic from "elastic-apm-node";
 
 const apm = elastic.start({
   serviceName: process.env.ELASTIC_SERVICE_NAME,
@@ -6,4 +6,4 @@ const apm = elastic.start({
   serverUrl: process.env.ELASTIC_SERVICE_URL,
   environment: process.env.ELASTIC_SERVICE_ENVIRONMENT,
 });
-export default apm;
+export default apm;*/

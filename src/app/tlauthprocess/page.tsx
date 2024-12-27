@@ -2,8 +2,11 @@
 import { useEffect, useState } from "react";
 import TelegramValidationPage from "@/components/tlValidation";
 import { getCurrentAuth } from "../auth/authActions";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function TelegramPage() {
+  const router = useRouter();
   const [session, setSession] = useState<string | null>(null);
   const [kinde_id, setKindeId] = useState("");
   const handleLoginComplete = async (newSession: string) => {
@@ -14,7 +17,7 @@ export default function TelegramPage() {
   useEffect(() => {
     getCurrentAuth().then((user) => {
       if (user) setKindeId(user.kinde_id);
-      else window.location.href = "/";
+      else router.push("/");
     });
   });
 
@@ -33,6 +36,13 @@ export default function TelegramPage() {
               Autenticado com sucesso!
             </h2>
             <p>Você pode criar seus canais e bots.</p>
+            <br></br>
+            <Link
+              className="w-full bg-[#ff7171] hover:bg-[#ff5959] text-white px-8 py-2 rounded-md transition-colors"
+              href={"/bots"}
+            >
+              Voltar para o Início
+            </Link>
           </div>
         )}
     </div>
