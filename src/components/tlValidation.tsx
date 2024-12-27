@@ -96,7 +96,7 @@ export default function TelegramValidationPage(
       const data = await response.json();
       if (!response.ok) throw new Error(data.error);
 
-      //onLoginComplete(data.session);
+      onLoginComplete(data.session);
     } catch (error) {
       setError(error instanceof Error ? error.message : "Failed to verify 2FA");
     }
