@@ -10,8 +10,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-
-export default function TelegramValidationPage() {
+interface TelegramLoginProps {
+  onLoginComplete: (session: string) => void;
+}
+export default function TelegramValidationPage(
+  { onLoginComplete }: TelegramLoginProps,
+) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneCode, setPhoneCode] = useState("");
   const [password, setPassword] = useState("");
@@ -65,7 +69,7 @@ export default function TelegramValidationPage() {
         setStep("password");
       } else {
         console.log(data);
-        //onLoginComplete(data.session);
+        onLoginComplete(data.session);
       }
     } catch (error) {
       setError(
