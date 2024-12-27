@@ -10,11 +10,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { UpdateSupabaseTelegramId } from "@/app/tlauthprocess/update_user_tl";
 interface TelegramLoginProps {
   onLoginComplete: (session: string) => void;
+  kinde_id: string;
 }
 export default function TelegramValidationPage(
-  { onLoginComplete }: TelegramLoginProps,
+  { onLoginComplete, kinde_id }: TelegramLoginProps,
 ) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneCode, setPhoneCode] = useState("");
@@ -68,7 +70,14 @@ export default function TelegramValidationPage(
       if (data.requiresPassword) {
         setStep("password");
       } else {
-        console.log(data);
+        const isUpdatedInDb = await UpdateSupabaseTelegramId(
+          data.sessionid,
+          data.result.user.id,
+          kinde_id,
+        );
+        if (!isUpdatedInDb) {
+          throw new Error("Failed to update user in database");
+        }
         onLoginComplete(data.session);
       }
     } catch (error) {

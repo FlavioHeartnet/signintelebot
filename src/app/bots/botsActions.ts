@@ -1,5 +1,6 @@
 "use server";
 
+import { dbErrorsCheck } from "@/utils/logs";
 import { supabaseAdmin } from "../api/supabase";
 export type SupabaseBots = {
   id: number;
@@ -79,5 +80,19 @@ export async function updatePaymentToken(id: string, payment_token: string) {
     }).eq("id", id);
   } catch (e) {
     throw new Error("Error while inserting bot supabase: " + e);
+  }
+}
+
+export async function checkTelegramConnectionByKindeId(kinde_id: string) {
+  const { data, error } = await supabaseAdmin()
+    .from("users").select("telegram_id")
+    .eq("kinde_id", kinde_id).limit(1);
+
+  dbErrorsCheck(error);
+
+  if (data) {
+    return data[0].telegram_id ? true : false;
+  } else {
+    return false;
   }
 }

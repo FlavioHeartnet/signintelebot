@@ -82,6 +82,7 @@ async function handleVerifyCode(sessionId: string, phoneCode: number) {
         status: 200,
       });
     } catch (error) {
+      console.log(error);
       if (error === "SESSION_PASSWORD_NEEDED") {
         return NextResponse.json({
           requiresPassword: true,
