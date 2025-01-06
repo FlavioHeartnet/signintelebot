@@ -7,8 +7,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil } from "lucide-react";
 import MercadoPagoAuthButton from "./mp-auth-button";
+import DeleteBotButton from "./delete-bot-button";
 
 interface Bot {
   id: number;
@@ -61,15 +62,7 @@ export default function BotTable({ bots, onEdit, onDelete }: BotTableProps) {
                     <Pencil className="w-4 h-4 mr-1" />
                     Edit
                   </Button>
-                  <Button
-                    onClick={() => onDelete(bot.id)}
-                    variant="outline"
-                    size="sm"
-                    className="flex items-center text-red-500 hover:text-red-700"
-                  >
-                    <Trash2 className="w-4 h-4 mr-1" />
-                    Delete
-                  </Button>
+                  <DeleteBotButton botId={bot.id} onDelete={onDelete} />
                 </div>
               </TableCell>
             </TableRow>

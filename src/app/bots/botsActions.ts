@@ -27,9 +27,7 @@ export async function getBots(userid: number) {
 export async function deleteBot(idBot: number) {
   const { status, error } = await supabaseAdmin().from("bots")
     .delete().eq("id", idBot);
-  if (error) {
-    console.log(error);
-  }
+  dbErrorsCheck(error);
   return status == 204 ? true : false;
 }
 
