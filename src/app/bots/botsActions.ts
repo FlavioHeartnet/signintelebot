@@ -6,6 +6,9 @@ export type SupabaseBots = {
   id: number;
   bot_token: string;
   bot_id_group: string;
+  bot_group_name: string;
+  bot_group_description: string;
+  bot_group_address: string;
   status: string;
   payment_token: string;
 };
@@ -34,6 +37,9 @@ export async function deleteBot(idBot: number) {
 export default async function insertbot(
   bot_token: string,
   bot_group_id: string,
+  botGroupName: string,
+  botAddress: string,
+  botGroupDescription: string,
   idUser: number,
 ) {
   try {

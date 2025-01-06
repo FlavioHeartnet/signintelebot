@@ -13,6 +13,9 @@ interface Bot {
   id: number;
   botToken: string;
   botGroupId: string;
+  botGroupName: string;
+  botGroupDescription: string;
+  botAddress: string;
   paymentIntegration: boolean;
 }
 export default function BotConfigForm({ userId }: { userId: number }) {
@@ -20,6 +23,9 @@ export default function BotConfigForm({ userId }: { userId: number }) {
     id: 0,
     botToken: "",
     botGroupId: "",
+    botGroupName: "",
+    botGroupDescription: "",
+    botAddress: "",
     paymentIntegration: false,
   });
 
@@ -34,6 +40,9 @@ export default function BotConfigForm({ userId }: { userId: number }) {
           id: bot.id,
           botToken: bot.bot_token,
           botGroupId: bot.bot_id_group,
+          botAddress: bot.bot_group_address,
+          botGroupName: bot.bot_group_name,
+          botGroupDescription: bot.bot_group_description,
           paymentIntegration: bot.payment_token ? true : false,
         } as Bot;
       });
@@ -58,6 +67,9 @@ export default function BotConfigForm({ userId }: { userId: number }) {
       const insertId = await insertbot(
         formData.botToken,
         formData.botGroupId,
+        formData.botGroupName,
+        formData.botAddress,
+        formData.botGroupDescription,
         userId,
       );
       setBots([...bots, { ...formData, id: insertId }]);
@@ -66,6 +78,9 @@ export default function BotConfigForm({ userId }: { userId: number }) {
       id: 0,
       botToken: "",
       botGroupId: "",
+      botGroupName: "",
+      botGroupDescription: "",
+      botAddress: "",
       paymentIntegration: false,
     });
   };
@@ -117,11 +132,36 @@ export default function BotConfigForm({ userId }: { userId: number }) {
           <div className="space-y-1">
             <input
               type="text"
-              placeholder="Enter Bot Group ID*"
+              placeholder="Entre com o nome do Canal*"
               className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ff7171] focus:border-transparent"
-              value={formData.botGroupId}
+              value={formData.botGroupName}
               onChange={(e) =>
-                setFormData({ ...formData, botGroupId: e.target.value })}
+                setFormData({ ...formData, botGroupName: e.target.value })}
+              required
+            />
+          </div>
+          <div className="space-y-1">
+            <input
+              type="text"
+              placeholder="Entre com a descrição do Canal*"
+              className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ff7171] focus:border-transparent"
+              value={formData.botGroupDescription}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  botGroupDescription: e.target.value,
+                })}
+              required
+            />
+          </div>
+          <div className="space-y-1">
+            <input
+              type="text"
+              placeholder="Nome único do Canal ex. meu_primeiro_bot*"
+              className="w-full px-4 py-3 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ff7171] focus:border-transparent"
+              value={formData.botAddress}
+              onChange={(e) =>
+                setFormData({ ...formData, botAddress: e.target.value })}
               required
             />
           </div>

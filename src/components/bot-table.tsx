@@ -15,6 +15,9 @@ interface Bot {
   id: number;
   botToken: string;
   botGroupId: string;
+  botGroupName: string;
+  botGroupDescription: string;
+  botAddress: string;
   paymentIntegration: boolean;
 }
 
@@ -34,7 +37,7 @@ export default function BotTable({ bots, onEdit, onDelete }: BotTableProps) {
         <TableHeader>
           <TableRow>
             <TableHead className="w-1/5">Bot Token</TableHead>
-            <TableHead className="w-1/5">Bot Group ID</TableHead>
+            <TableHead className="w-1/5">Bot Group Name</TableHead>
             <TableHead className="w-1/5">Integração de pagamento</TableHead>
             <TableHead className="w-2/5">Ações</TableHead>
           </TableRow>
@@ -45,7 +48,7 @@ export default function BotTable({ bots, onEdit, onDelete }: BotTableProps) {
               <TableCell className="font-medium">
                 {bot.botToken.slice(0, 4)}...{bot.botToken.slice(-4)}
               </TableCell>
-              <TableCell>{bot.botGroupId}</TableCell>
+              <TableCell>{bot.botGroupName}</TableCell>
               <TableCell>
                 {!bot.paymentIntegration
                   ? <MercadoPagoAuthButton idbot={bot.id} />
