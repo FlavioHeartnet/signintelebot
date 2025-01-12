@@ -95,6 +95,7 @@ async function setupTelegramCleint(
   );
 }
 async function updateProductChannelId(channelId: string, idProduct: number) {
+  //TODO Create function to store channelID in a product in supabase
   console.log(channelId);
   console.log(idProduct);
 }
@@ -107,6 +108,7 @@ export default async function insertbot(
   idUser: number,
 ) {
   try {
+    // ? Should we move this to let the customer decide which kind of product he wants his bot to manage? that way they'll always have a channel
     const session = await getSessionFromDb(idUser);
     const client = await setupTelegramCleint(session);
     const channelId = await createChannel(
