@@ -2,6 +2,8 @@
 
 import { dbErrorsCheck } from "@/utils/logs";
 import { supabaseAdmin } from "../api/supabase";
+import { StringSession } from "telegram/sessions";
+import { Api, TelegramClient } from "telegram";
 export type SupabaseBots = {
   id: number;
   bot_token: string;
@@ -34,6 +36,68 @@ export async function deleteBot(idBot: number) {
   return status == 204 ? true : false;
 }
 
+async function createChannel(
+  botGroupName: string,
+  botAddress: string,
+  botGroupDescription: string,
+  telegram_client: TelegramClient,
+) {
+  try {
+    // Create the channel
+    const result = await telegram_client.invoke(
+      new Api.channels.CreateChannel({
+        title: botGroupName,
+        about: botGroupDescription,
+        broadcast: true,
+        megagroup: false,
+      }),
+    ) as Api.Updates;
+
+    // Find the channel in the updates
+    const channel = result.chats[0];
+    if (!channel || !("id" in channel)) {
+      throw new Error("Failed to create channel");
+    }
+    const user = await telegram_client.getMe();
+    console.log(user.id);
+    const channelId = channel.id.toString();
+
+    // Set username if provided
+    if (botAddress) {
+      const updateUsernameResult = await telegram_client.invoke(
+        new Api.channels.UpdateUsername({
+          channel: await telegram_client.getInputEntity(channelId),
+          username: botAddress,
+        }),
+      );
+
+      if (!updateUsernameResult) {
+        console.warn("Failed to set channel username");
+      }
+    }
+
+    return channelId;
+  } catch (error) {
+    console.error("Error creating channel:", error);
+    throw error;
+  }
+}
+
+async function setupTelegramCleint(
+  telegram_session: string,
+) {
+  const currentSession = new StringSession(telegram_session);
+  return new TelegramClient(
+    currentSession,
+    parseFloat(process.env.TELEGRAM_API_ID ?? "0"),
+    process.env.TELEGRAM_API_HASH ?? "",
+    { connectionRetries: 5 },
+  );
+}
+async function updateProductChannelId(channelId: string, idProduct: number) {
+  console.log(channelId);
+  console.log(idProduct);
+}
 export default async function insertbot(
   bot_token: string,
   bot_group_id: string,
@@ -43,6 +107,15 @@ export default async function insertbot(
   idUser: number,
 ) {
   try {
+    const session = await getSessionFromDb(idUser);
+    const client = await setupTelegramCleint(session);
+    const channelId = await createChannel(
+      botGroupName,
+      botAddress,
+      botGroupDescription,
+      client,
+    );
+    updateProductChannelId(channelId, 0);
     const { data, error } = await supabaseAdmin().from("bots").insert({
       created_at: new Date(),
       bot_token: bot_token,
@@ -99,4 +172,16 @@ export async function checkTelegramConnectionByKindeId(kinde_id: string) {
   } else {
     return false;
   }
+}
+async function getSessionFromDb(idUser: number) {
+  const { data, error } = await supabaseAdmin().from("users").select(
+    "telegram_id, telegram_session",
+  ).eq("id", idUser).limit(1);
+  dbErrorsCheck(error);
+  if (data) {
+    if (data[0].telegram_session) {
+      return data[0].telegram_session as string;
+    }
+  }
+  return "";
 }
