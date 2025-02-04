@@ -95,9 +95,10 @@ async function setupTelegramCleint(
   );
 }
 async function updateProductChannelId(channelId: string, idProduct: number) {
-  //TODO Create function to store channelID in a product in supabase
-  console.log(channelId);
-  console.log(idProduct);
+  const { error } = await supabaseAdmin().from("products").update({
+    content: channelId,
+  }).eq("id", idProduct);
+  dbErrorsCheck(error);
 }
 export default async function insertbot(
   bot_token: string,
