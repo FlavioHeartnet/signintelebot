@@ -21,11 +21,12 @@ interface Bot {
 export default function BotConfigForm({ userId }: { userId: number }) {
   const [formData, setFormData] = useState<Bot>({
     id: 0,
-    botToken: "",
+    botToken: "7413915013:AAHf3Gp8MeU3ojOICfJd8hG1hiJjIa5a_rA",
     botGroupId: "",
-    botGroupName: "",
-    botGroupDescription: "",
-    botAddress: "",
+    botGroupName: "The Officials",
+    botGroupDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    botAddress: "the_official_channel",
     paymentIntegration: false,
   });
 
@@ -64,15 +65,20 @@ export default function BotConfigForm({ userId }: { userId: number }) {
       );
       setEditing(null);
     } else {
-      const insertId = await insertbot(
-        formData.botToken,
-        formData.botGroupId,
-        formData.botGroupName,
-        formData.botAddress,
-        formData.botGroupDescription,
-        userId,
-      );
-      setBots([...bots, { ...formData, id: insertId }]);
+      try {
+        const insertId = await insertbot(
+          formData.botToken,
+          formData.botGroupId,
+          formData.botGroupName,
+          formData.botAddress,
+          formData.botGroupDescription,
+          userId,
+        );
+        setBots([...bots, { ...formData, id: insertId }]);
+      } catch (e) {
+        toast.error("Falha ao cadastrar, tente novamente mais tarde!");
+        console.log(e);
+      }
     }
     setFormData({
       id: 0,

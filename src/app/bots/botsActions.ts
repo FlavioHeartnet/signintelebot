@@ -83,7 +83,7 @@ async function createChannel(
   }
 }
 
-async function setupTelegramCleint(
+async function setupTelegramClient(
   telegram_session: string,
 ) {
   const currentSession = new StringSession(telegram_session);
@@ -111,7 +111,7 @@ export default async function insertbot(
   try {
     // ? Should we move this to let the customer decide which kind of product he wants his bot to manage? that way they'll always have a channel
     const session = await getSessionFromDb(idUser);
-    const client = await setupTelegramCleint(session);
+    const client = await setupTelegramClient(session);
     const channelId = await createChannel(
       botGroupName,
       botAddress,
@@ -165,13 +165,23 @@ export async function updatePaymentToken(id: string, payment_token: string) {
 
 export async function checkTelegramConnectionByKindeId(kinde_id: string) {
   const { data, error } = await supabaseAdmin()
-    .from("users").select("telegram_id")
+    .from("users").select("telegram_id, telegram_session")
     .eq("kinde_id", kinde_id).limit(1);
 
   dbErrorsCheck(error);
 
   if (data) {
-    return data[0].telegram_id ? true : false;
+    try {
+      const session = await setupTelegramClient(
+        data[0].telegram_session as string,
+      );
+      await session.connect();
+      await session.getMe();
+      return data[0].telegram_id ? true : false;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      return false;
+    }
   } else {
     return false;
   }
