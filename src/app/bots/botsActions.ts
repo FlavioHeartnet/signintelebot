@@ -128,7 +128,7 @@ export default async function insertbot(
       botGroupDescription,
       client,
     );
-    updateProductChannelId(channelId, 0);
+
     const { data, error } = await supabaseAdmin().from("bots").insert({
       created_at: new Date(),
       bot_token: bot_token,
@@ -136,6 +136,7 @@ export default async function insertbot(
       status: "waiting payment integration",
       bot_id_group: bot_group_id,
     }).select("id").limit(1);
+    updateProductChannelId(channelId, 0);
     console.log(error);
     return data ? data[0].id : 0;
   } catch (e) {
