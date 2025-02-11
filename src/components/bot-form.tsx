@@ -21,11 +21,11 @@ interface Bot {
 export default function BotConfigForm({ userId }: { userId: number }) {
   const [formData, setFormData] = useState<Bot>({
     id: 0,
-    botToken: "7413915013:AAHf3Gp8MeU3ojOICfJd8hG1hiJjIa5a_rA",
+    botToken: "",
     botGroupId: "",
     botGroupName: "The Officials",
     botGroupDescription:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
     botAddress: "the_official_channel",
     paymentIntegration: false,
   });

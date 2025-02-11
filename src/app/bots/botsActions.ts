@@ -63,6 +63,7 @@ async function createChannel(
     const channelId = channel.id.toString();
 
     // Set username if provided
+    /*
     if (botAddress) {
       const updateUsernameResult = await telegram_client.invoke(
         new Api.channels.UpdateUsername({
@@ -74,7 +75,7 @@ async function createChannel(
       if (!updateUsernameResult) {
         console.warn("Failed to set channel username");
       }
-    }
+    }*/
 
     return channelId;
   } catch (error) {
@@ -95,10 +96,17 @@ async function setupTelegramClient(
   );
 }
 async function updateProductChannelId(channelId: string, idProduct: number) {
-  const { error } = await supabaseAdmin().from("products").update({
-    content: channelId,
-  }).eq("id", idProduct);
-  dbErrorsCheck(error);
+  if (idProduct === 0) { //TODO creating the product channel and link it with the bot
+    const { error } = await supabaseAdmin().from("products").insert({
+      content: channelId,
+    });
+    dbErrorsCheck(error);
+  } else {
+    const { error } = await supabaseAdmin().from("products").update({
+      content: channelId,
+    }).eq("id", idProduct);
+    dbErrorsCheck(error);
+  }
 }
 export default async function insertbot(
   bot_token: string,
@@ -112,6 +120,8 @@ export default async function insertbot(
     // ? Should we move this to let the customer decide which kind of product he wants his bot to manage? that way they'll always have a channel
     const session = await getSessionFromDb(idUser);
     const client = await setupTelegramClient(session);
+    await client.connect();
+
     const channelId = await createChannel(
       botGroupName,
       botAddress,
