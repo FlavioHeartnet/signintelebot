@@ -30,6 +30,7 @@ function AuthContent() {
   const state = searchParams.get("state");
   useEffect(() => {
     if (code) {
+      // !! This is been called twice, updating the db twice and create two channels in the telegram.
       handleAuth(code, state || "0");
     }
   }, []);
