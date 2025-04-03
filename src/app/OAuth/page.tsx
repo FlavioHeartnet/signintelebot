@@ -26,14 +26,13 @@ function AuthContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<MercadoPagoTokenResponse | null>(null);
-
+  const code = searchParams.get("code");
+  const state = searchParams.get("state");
   useEffect(() => {
-    const code = searchParams.get("code");
-    const state = searchParams.get("state");
     if (code) {
       handleAuth(code, state || "0");
     }
-  }, [searchParams]);
+  }, []);
 
   const handleAuth = async (code: string, state: string) => {
     setLoading(true);

@@ -44,21 +44,32 @@ export async function POST(
       body: formData.toString(),
     });
 
-    const data = await response.json();
+    const resp = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Failed to get access token");
+      throw new Error(resp.message || "Failed to get access token");
+    }
+
+    const { data } = await supabaseAdmin().from("bots").select("payment_token")
+      .eq("id", botid);
+    if (data !== null && data[0].payment_token !== null) {
+      return NextResponse.json({
+        error: "Bot already connected",
+        message: "This bot is already connected to Mercado Pago",
+      }, { status: 400 });
     }
 
     const { error } = await supabaseAdmin().from("bots").update({
-      payment_token: data.access_token,
+      payment_token: resp.access_token,
       status: "active",
     }).eq("id", botid);
     if (error) {
+      console.error("Error updating Mercado Pago token:", error);
       return NextResponse.json({
         error: "Internal server error",
         message: error.message,
       }, { status: 500 });
     }
+    console.log("Mercado Pago token updated successfully");
 
     return NextResponse.json(data, { status: 200 });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
