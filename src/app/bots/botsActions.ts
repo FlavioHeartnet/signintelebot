@@ -110,7 +110,7 @@ async function updateProductChannelId(
   idProduct: number,
   bot_id: number,
 ) {
-  if (idProduct === 0) { //TODO creating the product channel and link it with the bot
+  if (idProduct === 0) {
     const { error } = await supabaseAdmin().from("products").insert({
       content: channelId,
       description: botGroupDescription,

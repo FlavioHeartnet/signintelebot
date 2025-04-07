@@ -28,6 +28,9 @@ interface BotTableProps {
 }
 
 export default function BotTable({ bots, onEdit, onDelete }: BotTableProps) {
+  // TODO - Add a loading state
+  // TODO - Add a error state
+  // TODO - info is not loading
   return (
     <div className="mt-12 overflow-x-auto">
       <h2 className="text-2xl font-medium text-[#2d2d5f] mb-4">
