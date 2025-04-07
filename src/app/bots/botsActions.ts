@@ -95,15 +95,36 @@ async function setupTelegramClient(
     { connectionRetries: 5 },
   );
 }
-async function updateProductChannelId(channelId: string, idProduct: number) {
+async function updateProductChannelId(
+  {
+    channelId,
+    botGroupName,
+    botGroupDescription,
+    bot_id_group,
+  }: {
+    channelId: string;
+    botGroupName: string;
+    botGroupDescription: string;
+    bot_id_group: number;
+  },
+  idProduct: number,
+  bot_id: number,
+) {
   if (idProduct === 0) { //TODO creating the product channel and link it with the bot
     const { error } = await supabaseAdmin().from("products").insert({
       content: channelId,
+      description: botGroupDescription,
+      name: botGroupName,
+      type: "channel",
+      bot_group_id: bot_id_group,
+      bot: bot_id,
+      isActive: true,
     });
     dbErrorsCheck(error);
   } else {
     const { error } = await supabaseAdmin().from("products").update({
       content: channelId,
+      bot: bot_id,
     }).eq("id", idProduct);
     dbErrorsCheck(error);
   }
@@ -128,7 +149,7 @@ export default async function insertbot(
       botGroupDescription,
       client,
     );
-
+    // ! Data is null and not been saved
     const { data, error } = await supabaseAdmin().from("bots").insert({
       created_at: new Date(),
       bot_token: bot_token,
@@ -136,7 +157,20 @@ export default async function insertbot(
       status: "waiting payment integration",
       bot_id_group: bot_group_id,
     }).select("id").limit(1);
-    updateProductChannelId(channelId, 0);
+    if (data && data.length > 0) {
+      updateProductChannelId(
+        {
+          channelId: channelId,
+          botGroupName: botGroupName,
+          botGroupDescription: botGroupDescription,
+          bot_id_group: bot_group_id ? parseInt(bot_group_id) : 0,
+        },
+        0,
+        data[0].id,
+      );
+    } else {
+      console.error("Error: No Bot was inserted.");
+    }
     console.log(error);
     return data ? data[0].id : 0;
   } catch (e) {
