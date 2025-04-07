@@ -149,7 +149,7 @@ export default async function insertbot(
       botGroupDescription,
       client,
     );
-    // ! Data is null and not been saved
+    //TODO - Need to store the bot_name in the database
     const { data, error } = await supabaseAdmin().from("bots").insert({
       created_at: new Date(),
       bot_token: bot_token,
