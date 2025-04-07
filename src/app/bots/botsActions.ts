@@ -7,7 +7,7 @@ import { Api, TelegramClient } from "telegram";
 export type SupabaseBots = {
   id: number;
   bot_token: string;
-  bot_id_group: string;
+  bot_name: string;
   bot_group_name: string;
   bot_group_description: string;
   bot_group_address: string;
@@ -17,7 +17,7 @@ export type SupabaseBots = {
 export async function getBots(userid: number) {
   try {
     const { data, error } = await supabaseAdmin().from("bots")
-      .select("id, bot_token, bot_id_group, status, payment_token")
+      .select("id, bot_token, bot_name, status, payment_token")
       .eq("bot_owner", userid);
     if (error) {
       console.log(error);

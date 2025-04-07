@@ -17,6 +17,7 @@ interface Bot {
   botGroupDescription: string;
   botAddress: string;
   paymentIntegration: boolean;
+  botName?: string;
 }
 export default function BotConfigForm({ userId }: { userId: number }) {
   const [formData, setFormData] = useState<Bot>({
@@ -40,11 +41,8 @@ export default function BotConfigForm({ userId }: { userId: number }) {
         return {
           id: bot.id,
           botToken: bot.bot_token,
-          botGroupId: bot.bot_id_group,
-          botAddress: bot.bot_group_address,
-          botGroupName: bot.bot_group_name,
-          botGroupDescription: bot.bot_group_description,
           paymentIntegration: bot.payment_token ? true : false,
+          botName: bot.bot_name,
         } as Bot;
       });
       setBots(
@@ -90,7 +88,7 @@ export default function BotConfigForm({ userId }: { userId: number }) {
       paymentIntegration: false,
     });
   };
-
+  //TODO This is not working because a channel(product) and a bot are been created at the same time, this need to be separated
   const handleEdit = (bot: Bot) => {
     setFormData(bot);
     setEditing(bot.id);
@@ -180,7 +178,19 @@ export default function BotConfigForm({ userId }: { userId: number }) {
           {editing ? "Editar" : "Salvar"} →
         </Button>
       </form>
-      <BotTable bots={bots} onDelete={handleDelete} onEdit={handleEdit} />
+      <BotTable
+        bots={bots.map(({ id, botToken, botName, paymentIntegration }) => ({
+          id,
+          botToken,
+          botName,
+          paymentIntegration,
+        }))}
+        onDelete={handleDelete}
+        onEdit={(bot) => {
+          const fullBot = bots.find((b) => b.id === bot.id);
+          if (fullBot) handleEdit(fullBot);
+        }}
+      />
     </div>
   );
 }
